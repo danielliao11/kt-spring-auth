@@ -1,0 +1,4 @@
+rootProject.name = 'kt-spring-microservices-boilerplate'
+include 'auth'
+include 'common'
+

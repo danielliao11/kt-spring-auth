@@ -32,7 +32,7 @@ class AuthServerConfig(
             .accessTokenConverter(jwtAccessTokenConverter())
     }
 
-    override fun configure(clients: ClientDetailsServiceConfigurer?) {
+    override fun configure(clients: ClientDetailsServiceConfigurer) {
         clients.withClientDetails(clientDetailService())
     }
 

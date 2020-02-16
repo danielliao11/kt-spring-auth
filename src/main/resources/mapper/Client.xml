@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.danielliaows.infrastructure.auth.mapper.ClientMapper">
+
+    <resultMap type="com.danielliaows.infrastructure.auth" id="clientMap">
+        <result property="id" column="id"/>
+        <result property="clientId" column="client_id"/>
+        <result property="clientSecret" column="client_secret"/>
+        <result property="resourceIds" column="resource_ids"/>
+        <result property="accessTokenValiditySeconds" column="access_token_validity_seconds"/>
+        <result property="refreshTokenValiditySeconds" column="refresh_token_validity_seconds"/>
+        <result property="scopes" column="scopes"/>
+        <result property="authorizedGrantTypes" column="authorized_grant_types"/>
+        <result property="registeredRedirectUris" column="registered_redirect_uris"/>
+        <result property="authorities" column="authorities"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <select id="findByClientId" resultMap="clientMap">
+        select * from clients where client_id = #{clientId}
+    </select>
+
+</mapper>

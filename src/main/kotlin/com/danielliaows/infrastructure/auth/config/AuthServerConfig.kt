@@ -48,8 +48,8 @@ class AuthServerConfig(
     @Bean
     fun jwtAccessTokenConverter(): JwtAccessTokenConverter {
         val converter = JwtAccessTokenConverter()
-        val keyStoreFactory = KeyStoreKeyFactory(ClassPathResource(""), "".toCharArray())
-        converter.setKeyPair(keyStoreFactory.getKeyPair(""))
+        val keyStoreFactory = KeyStoreKeyFactory(ClassPathResource("auth.jks"), "123456".toCharArray())
+        converter.setKeyPair(keyStoreFactory.getKeyPair("auth"))
         return converter
     }
 }

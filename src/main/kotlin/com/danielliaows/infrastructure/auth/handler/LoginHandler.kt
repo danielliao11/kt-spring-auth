@@ -5,6 +5,7 @@ import com.danielliaows.infrastructure.auth.custom.CustomUserDetailsService
 import com.danielliaows.infrastructure.auth.param.LoginParam
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.common.OAuth2AccessToken
 import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAuthenticationException
@@ -12,6 +13,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication
 import org.springframework.security.oauth2.provider.TokenRequest
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices
 import org.springframework.stereotype.Service
+import java.lang.Exception
 import java.nio.charset.StandardCharsets
 import java.util.*
 import javax.servlet.http.HttpServletRequest
@@ -26,7 +28,8 @@ class LoginHandler(
 
     @Throws(
             UnapprovedClientAuthenticationException::class,
-            BadCredentialsException::class
+            BadCredentialsException::class,
+            UsernameNotFoundException::class
     )
     fun login(request: HttpServletRequest, loginParam: LoginParam): OAuth2AccessToken {
         val header = request.getHeader("Authorization")
@@ -36,7 +39,7 @@ class LoginHandler(
         val clientDetails = clientDetailsService.loadClientByClientId(clientId)
         if (clientDetails == null) {
             throw UnapprovedClientAuthenticationException("Client: $clientId not found.")
-        } else if (passwordEncoder.matches(clientSecret, clientDetails.clientSecret)) {
+        } else if (!passwordEncoder.matches(clientSecret, clientDetails.clientSecret)) {
             throw UnapprovedClientAuthenticationException("Invalid client secret.")
         }
         // Create token request

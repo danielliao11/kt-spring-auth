@@ -11,6 +11,7 @@ class CustomUserDetailsService(
         private val userMapper: UserMapper
 ) : UserDetailsService {
 
+    @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String): UserDetails? {
         val user = userMapper.findByUsername(username) ?: throw UsernameNotFoundException(username)
         return CustomUserDetails(user)

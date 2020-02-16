@@ -26,9 +26,9 @@ class AuthServerConfig(
 
     override fun configure(endpoints: AuthorizationServerEndpointsConfigurer) {
         endpoints
-            .authenticationManager(authenticationManager)
-            .tokenStore(tokenStore())
-            .accessTokenConverter(jwtAccessTokenConverter())
+                .authenticationManager(authenticationManager)
+                .tokenStore(tokenStore())
+                .accessTokenConverter(jwtAccessTokenConverter())
     }
 
     override fun configure(clients: ClientDetailsServiceConfigurer) {

@@ -3,7 +3,7 @@
 
 <mapper namespace="com.danielliaows.infrastructure.auth.mapper.AuthTypeMapper">
 
-    <resultMap type="com.danielliaows.infrastructure.auth" id="authTypeMap">
+    <resultMap type="com.danielliaows.infrastructure.auth.model.AuthType" id="authTypeMap">
         <result property="id" column="id"/>
         <result property="userId" column="user_id"/>
         <result property="type" column="type"/>

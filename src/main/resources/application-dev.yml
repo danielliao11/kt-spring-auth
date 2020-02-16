@@ -23,4 +23,4 @@ mybatis:
   mapper-locations: "classpath*:mapper/*.xml"
 
 mapper:
-  mappers: com.danielliaows.invest.diary.commons.CommonMapper
+  mappers: com.danielliaows.infrastructure.auth.common.CommonMapper

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 import javax.servlet.http.HttpServletRequest
 
 @RestController
-@RequestMapping("")
+@RequestMapping("open/login")
 class LoginController(private val loginHandler: LoginHandler) {
 
     @PostMapping

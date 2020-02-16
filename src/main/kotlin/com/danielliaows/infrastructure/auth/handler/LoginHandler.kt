@@ -1,9 +1,8 @@
 package com.danielliaows.infrastructure.auth.handler
 
-import com.danielliaows.infrastructure.auth.common.RequestWrapper
 import com.danielliaows.infrastructure.auth.custom.CustomClientDetailsService
 import com.danielliaows.infrastructure.auth.custom.CustomUserDetailsService
-import com.danielliaows.infrastructure.auth.mapper.ClientMapper
+import com.danielliaows.infrastructure.auth.param.LoginParam
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -12,10 +11,12 @@ import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAut
 import org.springframework.security.oauth2.provider.OAuth2Authentication
 import org.springframework.security.oauth2.provider.TokenRequest
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices
+import org.springframework.stereotype.Service
 import java.nio.charset.StandardCharsets
 import java.util.*
 import javax.servlet.http.HttpServletRequest
 
+@Service
 class LoginHandler(
         private val clientDetailsService: CustomClientDetailsService,
         private val userDetailsService: CustomUserDetailsService,
@@ -27,9 +28,8 @@ class LoginHandler(
             UnapprovedClientAuthenticationException::class,
             BadCredentialsException::class
     )
-    fun login(request: HttpServletRequest): OAuth2AccessToken {
-        val req = RequestWrapper(request)
-        val header = req.getHeader("Authorization")
+    fun login(request: HttpServletRequest, loginParam: LoginParam): OAuth2AccessToken {
+        val header = request.getHeader("Authorization")
         val client = decodeHeader(header)
         val clientId = client[0]
         val clientSecret = client[1]
@@ -40,12 +40,11 @@ class LoginHandler(
             throw UnapprovedClientAuthenticationException("Invalid client secret.")
         }
         // Create token request
-        val tokenRequest = TokenRequest(emptyMap(), clientId, clientDetails.scope, request.getParameter("grant_type"))
+        val tokenRequest = TokenRequest(emptyMap(), clientId, clientDetails.scope, loginParam.type)
         // Create oauth2 token request
         val oAuth2AccessTokenRequest = tokenRequest.createOAuth2Request(clientDetails)
-        val username = request.getParameter("username")
         // Get UserDetails of current user
-        val userDetails = userDetailsService.loadUserByUsername(username) ?: throw BadCredentialsException("User: $username not found.")
+        val userDetails = userDetailsService.loadUserByUsername(loginParam.username) ?: throw BadCredentialsException("User: $loginParam.username not found.")
         // Create user authentication
         val authentication = UsernamePasswordAuthenticationToken(userDetails.username, userDetails.password, userDetails.authorities)
         // Create oauth2 authentication

@@ -36,7 +36,6 @@ hs_err_pid*
 *~
 *.sublime-*
 .svn/
-*.jks
 /data
 /out
 /resources

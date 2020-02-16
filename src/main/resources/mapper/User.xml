@@ -14,6 +14,6 @@
     </resultMap>
 
     <select id="findByUsername" resultMap="userMap">
-        select * from users where username = #{username}
+        select u.* from users u left join auth_types a on u.id = a.user_id where a.content = #{username}
     </select>
 </mapper>

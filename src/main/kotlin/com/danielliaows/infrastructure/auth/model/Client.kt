@@ -9,7 +9,7 @@ import javax.persistence.Table
 data class Client(
         @Id
         @KeySql(genId = UUIDGenerator::class)
-        private val id: String,
+        val id: String,
         val clientId: String,
         var clientSecret: String,
         var resourceIds: String,
@@ -19,6 +19,6 @@ data class Client(
         var authorizedGrantTypes: String,
         var registeredRedirectUris: String,
         var authorities: String,
-        private val createdAt: Long,
-        private var updatedAt: Long
+        val createdAt: Long,
+        var updatedAt: Long
 )

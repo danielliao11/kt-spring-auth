@@ -1,4 +1,4 @@
-package com.danielliaows.infrastructure.auth.tool
+package com.danielliaows.infrastructure.auth.common
 
 import kotlin.random.Random
 

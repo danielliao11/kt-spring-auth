@@ -9,10 +9,10 @@ import javax.persistence.Table
 data class AuthType(
         @Id
         @KeySql(genId = UUIDGenerator::class)
-        private val id: String,
-        private val userId: String,
-        private var type: String,
-        private var content: String,
-        private val createdAt: Long,
-        private var updatedAt: Long
+        val id: String,
+        val userId: String,
+        var type: String,
+        var content: String,
+        val createdAt: Long,
+        var updatedAt: Long
 )

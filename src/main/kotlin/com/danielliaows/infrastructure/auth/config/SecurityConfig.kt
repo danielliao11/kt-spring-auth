@@ -1,5 +1,6 @@
-package com.danielliaows.infrastructure.boilerplate.auth.config
+package com.danielliaows.infrastructure.auth.config
 
+import com.danielliaows.infrastructure.auth.custom.CustomUserDetailsService
 import org.springframework.context.annotation.Bean
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -7,11 +8,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.provisioning.JdbcUserDetailsManager
-import javax.sql.DataSource
 
 @EnableWebSecurity
-class SecurityConfig(private val dataSource: DataSource) : WebSecurityConfigurerAdapter() {
+class SecurityConfig(
+        private val customUserDetailsService: CustomUserDetailsService
+) : WebSecurityConfigurerAdapter() {
 
     @Bean
     fun passwordEncoder(): PasswordEncoder {
@@ -19,7 +20,7 @@ class SecurityConfig(private val dataSource: DataSource) : WebSecurityConfigurer
     }
 
     override fun userDetailsService(): UserDetailsService {
-        return JdbcUserDetailsManager(dataSource)
+        return customUserDetailsService
     }
 
     @Bean

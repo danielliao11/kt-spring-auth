@@ -1,9 +1,26 @@
+server:
+  port: 10001
+  undertow:
+    io-threads: 4
+    worker-threads: 32
+    buffer-size: 1024
+    direct-buffers: true
+
 spring:
+  application:
+    name: ${APP_NAME:auth}
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/postgres?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://localhost:5432/auth?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&zeroDateTimeBehavior=convertToNull
+    username: auth
+    password: auth
+    hikari:
+      connection-test-query: SELECT 1
   redis:
     host: localhost
     port: 6379
+
+mybatis:
+  mapper-locations: "classpath*:mapper/*.xml"
+
+mapper:
+  mappers: com.danielliaows.invest.diary.commons.CommonMapper

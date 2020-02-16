@@ -1,4 +1,4 @@
-package com.danielliaows.infrastructure.boilerplate.auth;
+package com.danielliaows.infrastructure.auth;
 
 /*
 Source code of auth.

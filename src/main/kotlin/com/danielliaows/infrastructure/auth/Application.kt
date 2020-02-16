@@ -1,4 +1,4 @@
-package com.danielliaows.infrastructure.boilerplate.auth
+package com.danielliaows.infrastructure.auth
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication

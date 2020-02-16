@@ -7,7 +7,7 @@ class RandomCodeGenerator {
         private val numbers: CharArray = "0123456789".toCharArray()
         private val characters: CharArray = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray()
 
-        fun random(length: Int, number: Boolean, character: Boolean) {
+        fun random(length: Int, number: Boolean, character: Boolean): String {
             val source: CharArray = "".toCharArray()
             if (number) {
                 source.plus(numbers)
@@ -19,6 +19,7 @@ class RandomCodeGenerator {
             for (i in 0..length) {
                 result.append(source[Random.nextInt()])
             }
+            return result.toString()
         }
     }
 }

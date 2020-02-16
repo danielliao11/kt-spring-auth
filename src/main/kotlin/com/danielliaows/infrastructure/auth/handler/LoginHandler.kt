@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest
 class LoginHandler(
         private val clientDetailsService: CustomClientDetailsService,
         private val userDetailsService: CustomUserDetailsService,
+        private val codeHandler: CodeHandler,
         private val authorizationServerTokenServices: AuthorizationServerTokenServices,
         private val passwordEncoder: PasswordEncoder
 ) {
@@ -48,6 +49,9 @@ class LoginHandler(
         val oAuth2AccessTokenRequest = tokenRequest.createOAuth2Request(clientDetails)
         // Get UserDetails of current user
         val userDetails = userDetailsService.loadUserByUsername(loginParam.username) ?: throw BadCredentialsException("User: $loginParam.username not found.")
+        // Verify user
+        val value = if ("password" == loginParam.type) loginParam.password else loginParam.code
+        verify(loginParam.username, value, loginParam.type, userDetails.password)
         // Create user authentication
         val authentication = UsernamePasswordAuthenticationToken(userDetails.username, userDetails.password, userDetails.authorities)
         // Create oauth2 authentication
@@ -85,5 +89,17 @@ class LoginHandler(
             throw BadCredentialsException("Invalid basic token.")
         }
         return tokenArray
+    }
+
+    fun verify(key: String, value: String, type: String, password: String) {
+        if ("password" == type) {
+            if (!passwordEncoder.matches(value, password)) {
+                throw BadCredentialsException("Invalid password.")
+            }
+        } else if ("code" == type) {
+            if (!codeHandler.verify(key, value)) {
+                throw BadCredentialsException("Invalid code.")
+            }
+        }
     }
 }

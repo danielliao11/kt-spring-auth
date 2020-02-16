@@ -1,4 +1,4 @@
-package com.danielliaows.invest.diary.common
+package com.danielliaows.infrastructure.auth.common
 
 import org.apache.commons.io.IOUtils
 import java.io.*
@@ -7,13 +7,6 @@ import javax.servlet.ServletInputStream
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletRequestWrapper
 
-/**
- * Multiple reader for [HttpServletRequest].
- *
- * @author <a href="http://github.com/saintdan">Liao Yifan</a>
- * @date 07/12/2017
- * @since JDK1.8
- */
 class RequestWrapper(request: HttpServletRequest) : HttpServletRequestWrapper(request) {
 
   private var cachedBytes: ByteArrayOutputStream? = null

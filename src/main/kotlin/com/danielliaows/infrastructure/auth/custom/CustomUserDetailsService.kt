@@ -1,11 +1,18 @@
-package com.danielliaows.infrastructure.boilerplate.auth.custom
+package com.danielliaows.infrastructure.auth.custom
 
+import com.danielliaows.infrastructure.auth.mapper.UserMapper
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.security.core.userdetails.UsernameNotFoundException
+import org.springframework.stereotype.Component
 
-class CustomUserDetailsService : UserDetailsService {
+@Component
+class CustomUserDetailsService(
+        private val userMapper: UserMapper
+) : UserDetailsService {
 
-    override fun loadUserByUsername(username: String?): UserDetails {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun loadUserByUsername(username: String): UserDetails? {
+        val user = userMapper.findByUsername(username) ?: throw UsernameNotFoundException(username)
+        return CustomUserDetails(user)
     }
 }

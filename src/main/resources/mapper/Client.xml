@@ -15,7 +15,9 @@
         <result property="registeredRedirectUris" column="registered_redirect_uris"/>
         <result property="authorities" column="authorities"/>
         <result property="createdAt" column="created_at"/>
+        <result property="createdBy" column="created_by"/>
         <result property="updatedAt" column="updated_at"/>
+        <result property="updatedBy" column="updated_by"/>
     </resultMap>
 
     <select id="findByClientId" resultMap="clientMap">

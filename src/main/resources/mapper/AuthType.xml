@@ -9,7 +9,9 @@
         <result property="type" column="type"/>
         <result property="content" column="content"/>
         <result property="createdAt" column="created_at"/>
+        <result property="createdBy" column="created_by"/>
         <result property="updatedAt" column="updated_at"/>
+        <result property="updatedBy" column="updated_by"/>
     </resultMap>
 
 </mapper>

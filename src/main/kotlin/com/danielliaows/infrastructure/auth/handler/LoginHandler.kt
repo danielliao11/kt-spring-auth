@@ -91,6 +91,10 @@ class LoginHandler(
         return tokenArray
     }
 
+    /**
+     * Login with password, verify password.
+     * Login with code, verify code.
+     */
     fun verify(key: String, value: String, type: String, password: String) {
         if ("password" == type) {
             if (!passwordEncoder.matches(value, password)) {

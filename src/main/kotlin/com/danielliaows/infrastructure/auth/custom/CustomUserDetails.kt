@@ -10,18 +10,18 @@ class CustomUserDetails(
 ) : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
-        return user.authorities
+        return user.authorities!!
                 .split("|")
                 .map { SimpleGrantedAuthority(it) }
                 .toMutableList()
     }
 
     override fun isEnabled(): Boolean {
-        return user.isEnable
+        return user.isEnable!!
     }
 
     override fun getUsername(): String {
-        return user.username
+        return user.username!!
     }
 
     override fun isCredentialsNonExpired(): Boolean {
@@ -29,7 +29,7 @@ class CustomUserDetails(
     }
 
     override fun getPassword(): String {
-        return user.password
+        return user.password!!
     }
 
     override fun isAccountNonExpired(): Boolean {

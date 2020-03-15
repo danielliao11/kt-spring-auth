@@ -18,15 +18,15 @@ class CustomClientDetails(
     }
 
     override fun getAccessTokenValiditySeconds(): Int {
-        return client.accessTokenValiditySeconds
+        return client.accessTokenValiditySeconds!!
     }
 
     override fun getResourceIds(): MutableSet<String> {
-        return client.resourceIds.split("|").toMutableSet()
+        return client.resourceIds!!.split("|").toMutableSet()
     }
 
     override fun getClientId(): String {
-        return client.clientId
+        return client.clientId!!
     }
 
     override fun isAutoApprove(scope: String?): Boolean {
@@ -34,19 +34,19 @@ class CustomClientDetails(
     }
 
     override fun getAuthorities(): MutableCollection<GrantedAuthority> {
-        return client.authorities.split("|").map { SimpleGrantedAuthority(it) }.toMutableList()
+        return client.authorities!!.split("|").map { SimpleGrantedAuthority(it) }.toMutableList()
     }
 
     override fun getRefreshTokenValiditySeconds(): Int {
-        return client.refreshTokenValiditySeconds
+        return client.refreshTokenValiditySeconds!!
     }
 
     override fun getClientSecret(): String {
-        return client.clientSecret
+        return client.clientSecret!!
     }
 
     override fun getRegisteredRedirectUri(): MutableSet<String> {
-        return client.registeredRedirectUris.split("|").toMutableSet()
+        return client.registeredRedirectUris!!.split("|").toMutableSet()
     }
 
     override fun isScoped(): Boolean {
@@ -54,10 +54,10 @@ class CustomClientDetails(
     }
 
     override fun getScope(): MutableSet<String> {
-        return client.scopes.split("|").toMutableSet()
+        return client.scopes!!.split("|").toMutableSet()
     }
 
     override fun getAuthorizedGrantTypes(): MutableSet<String> {
-        return client.authorizedGrantTypes.split("|").toMutableSet()
+        return client.authorizedGrantTypes!!.split("|").toMutableSet()
     }
 }

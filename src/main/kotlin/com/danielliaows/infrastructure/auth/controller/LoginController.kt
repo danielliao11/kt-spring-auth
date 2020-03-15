@@ -12,10 +12,13 @@ import javax.servlet.http.HttpServletRequest
 
 @RestController
 @RequestMapping("open/login")
-class LoginController(private val loginHandler: LoginHandler) {
+class LoginController(
+        private val request: HttpServletRequest,
+        private val loginHandler: LoginHandler
+) {
 
     @PostMapping
-    fun login(request: HttpServletRequest, @RequestBody param: LoginParam): ResponseEntity<Any> {
+    fun login(@RequestBody param: LoginParam): ResponseEntity<Any> {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(loginHandler.login(request, param))

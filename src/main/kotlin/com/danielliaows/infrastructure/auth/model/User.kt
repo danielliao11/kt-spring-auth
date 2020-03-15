@@ -12,7 +12,7 @@ import javax.persistence.Transient
 data class User(
         @Id
         @KeySql(genId = UUIDGenerator::class)
-        val id: String? = null,
+        var id: String? = null,
 
         @Column(name = "username")
         var username: String? = null,

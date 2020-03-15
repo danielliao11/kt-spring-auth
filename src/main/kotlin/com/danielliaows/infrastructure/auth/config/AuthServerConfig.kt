@@ -1,5 +1,6 @@
 package com.danielliaows.infrastructure.auth.config
 
+import com.danielliaows.infrastructure.auth.custom.CustomAccessTokenConverter
 import com.danielliaows.infrastructure.auth.custom.CustomClientDetailsService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -19,9 +20,10 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 @Configuration
 @EnableAuthorizationServer
 class AuthServerConfig(
-    private val authenticationManager: AuthenticationManager,
-    private val customClientDetailsService: CustomClientDetailsService,
-    private val redisConnectionFactory: RedisConnectionFactory
+        private val authenticationManager: AuthenticationManager,
+        private val customClientDetailsService: CustomClientDetailsService,
+        private val customAccessTokenConverter: CustomAccessTokenConverter,
+        private val redisConnectionFactory: RedisConnectionFactory
 ) : AuthorizationServerConfigurerAdapter() {
 
     override fun configure(endpoints: AuthorizationServerEndpointsConfigurer) {
@@ -49,6 +51,7 @@ class AuthServerConfig(
         val converter = JwtAccessTokenConverter()
         val keyStoreFactory = KeyStoreKeyFactory(ClassPathResource("auth.jks"), "123456".toCharArray())
         converter.setKeyPair(keyStoreFactory.getKeyPair("auth"))
+        converter.accessTokenConverter = customAccessTokenConverter
         return converter
     }
 }

@@ -27,6 +27,7 @@ class SecurityConfig(
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/open/**").permitAll()
+                .anyRequest().authenticated()
     }
 
     @Bean

@@ -1,7 +1,6 @@
 package com.danielliaows.infrastructure.auth.common
 
 import javax.persistence.Column
-import javax.persistence.Transient
 
 open class CommonInfo(
 
@@ -15,11 +14,5 @@ open class CommonInfo(
     var updatedAt: Long? = null,
 
     @Column(name = "updated_by")
-    var updatedBy: String? = null,
-
-    @Transient
-    var code: String? = null,
-
-    @Transient
-    val msg: String? = null
-)
+    var updatedBy: String? = null
+) : ResponseInfo()

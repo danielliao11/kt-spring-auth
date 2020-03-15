@@ -1,6 +1,7 @@
 package com.danielliaows.infrastructure.auth.handler
 
 import com.danielliaows.infrastructure.auth.custom.CustomClientDetailsService
+import com.danielliaows.infrastructure.auth.custom.CustomTokenEnhancer
 import com.danielliaows.infrastructure.auth.custom.CustomUserDetailsService
 import com.danielliaows.infrastructure.auth.param.LoginParam
 import org.springframework.security.authentication.BadCredentialsException
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletRequest
 class LoginHandler(
         private val clientDetailsService: CustomClientDetailsService,
         private val userDetailsService: CustomUserDetailsService,
+        private val customTokenEnhancer: CustomTokenEnhancer,
         private val codeHandler: CodeHandler,
         private val authorizationServerTokenServices: AuthorizationServerTokenServices,
         private val passwordEncoder: PasswordEncoder
@@ -56,7 +58,8 @@ class LoginHandler(
         // Create oauth2 authentication
         val oAuth2Authentication = OAuth2Authentication(oAuth2AccessTokenRequest, authentication)
         // Create access token
-        return authorizationServerTokenServices.createAccessToken(oAuth2Authentication)
+        val token = authorizationServerTokenServices.createAccessToken(oAuth2Authentication)
+        return customTokenEnhancer.enhance(token, oAuth2Authentication)
     }
 
     /**

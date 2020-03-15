@@ -17,7 +17,7 @@ data class AuthType(
         val userId: String? = null,
 
         @Column(name = "type")
-        var type: String? = null,
+        var type: Int? = null,
 
         @Column(name = "content")
         var content: String? = null

@@ -27,14 +27,16 @@ class LoginController(
             ResponseEntity
                     .status(HttpStatus.CREATED)
                     .body(loginHandler.login(request, param))
-        } catch (e: UnapprovedClientAuthenticationException) {
-            ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ResponseInfo("", e.localizedMessage))
-        } catch (e: BadCredentialsException) {
-            ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ResponseInfo("", e.localizedMessage))
-        } catch (e: UsernameNotFoundException) {
-            ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ResponseInfo("", e.localizedMessage))
         } catch (e: Exception) {
-            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ResponseInfo("", e.localizedMessage))
+            var status = HttpStatus.UNPROCESSABLE_ENTITY
+            var code = "AU_UNKNOWN_ERROR"
+            when (e) {
+                is UnapprovedClientAuthenticationException -> code = "AU_INVALID_CLIENT"
+                is BadCredentialsException -> code = "AU_BAD_CREDENTIAL"
+                is UsernameNotFoundException -> code = "AU_USERNAME_NOT_FOUND"
+                else -> status = HttpStatus.INTERNAL_SERVER_ERROR
+            }
+            return ResponseEntity.status(status).body(ResponseInfo(code, e.localizedMessage))
         }
     }
 }
